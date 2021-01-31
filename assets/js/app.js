@@ -20,11 +20,16 @@ d3.csv('assets/data/data.csv').then(function(data) {
 	var svg = d3.select('#scatter').append('svg').attr('width', svgWidth).attr('height', svgHeight);
 	var chart = svg.append('g').attr('transform', `translate(${margins.left}, ${margins.top})`);
 
+	data.forEach(function(d) {
+		d.obesity = +d.obesity;
+		d.income = +d.income;
+	});
+
 	var xaxis = d3.scaleLinear()
-		.domain([0, d3.max(data, d => d.poverty)])
+		.domain([20, d3.max(data, d => d.obesity)])
 		.range([0, width]);
 	var yaxis = d3.scaleLinear()
-		.domain([0, d3.max(data, d => d.healthcare)])
+		.domain([30000, d3.max(data, d => d.income)])
 		.range([height, 0]);
 	
 	var bottomAxis = d3.axisBottom(xaxis);
@@ -43,10 +48,22 @@ d3.csv('assets/data/data.csv').then(function(data) {
 		.data(data)
 		.enter()
 		.append('circle')
-		.attr('cx', d => xaxis(d.poverty))
-		.attr('cy', d => yaxis(d.healthcare))
-		.attr('r', 20)
-		.attr('fill', 'blue');
+		.attr('cx', d => xaxis(d.obesity))
+		.attr('cy', d => yaxis(d.income))
+		.attr('r', 10)
+		.attr('fill', 'grey');
 
+	chart.select("g")
+        .selectAll("circle")
+        .data(data)
+        .enter()
+        .append("text")
+        .text(d => d.abbr)
+        .attr("x", d => xaxis(d.obesity))
+		.attr("y", d => yaxis(d.income))
+		.attr("dy",-395)
+        .attr("text-anchor", "middle")
+        .attr("font-size", "12px")
+        .attr("fill", "black");
 
 });
