@@ -30,12 +30,23 @@ d3.csv('assets/data/data.csv').then(function(data) {
 	var bottomAxis = d3.axisBottom(xaxis);
 	var leftAxis = d3.axisLeft(yaxis);
 
+	// setup axis ticks
 	chart.append("g")
 	.attr("transform", `translate(0, ${height})`)
 	.call(bottomAxis);
 
   	chart.append("g")
 	.call(leftAxis);
+
+	// circle group
+	chart.selectAll('circle')
+		.data(data)
+		.enter()
+		.append('circle')
+		.attr('cx', d => xaxis(d.poverty))
+		.attr('cy', d => yaxis(d.healthcare))
+		.attr('r', 20)
+		.attr('fill', 'blue');
 
 
 });
