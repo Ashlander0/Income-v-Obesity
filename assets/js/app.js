@@ -53,17 +53,33 @@ d3.csv('assets/data/data.csv').then(function(data) {
 		.attr('r', 10)
 		.attr('fill', 'grey');
 
-	chart.select("g")
-        .selectAll("circle")
+	chart.select('g')
+        .selectAll('circle')
         .data(data)
         .enter()
-        .append("text")
+        .append('text')
         .text(d => d.abbr)
-        .attr("x", d => xaxis(d.obesity))
-		.attr("y", d => yaxis(d.income))
-		.attr("dy",-395)
-        .attr("text-anchor", "middle")
-        .attr("font-size", "12px")
-        .attr("fill", "black");
+        .attr('x', d => xaxis(d.obesity))
+		.attr('y', d => yaxis(d.income))
+		.attr('dy',-395)
+        .attr('text-anchor', 'middle')
+        .attr('font-size', '12px')
+		.attr('fill', 'black');
+
+	// axis labels
+	chart.append('text')
+		.attr('transform', 'rotate(-90)')
+		.attr('y', 0)
+		.attr('x', -250)
+		.attr('dy', '1em')
+		.attr('class', 'axisText')
+		.text('Average Income');
+
+	chart.append('text')
+		.attr('transform', `translate(${width/2}, ${height + margins.top - 10})`)
+		//.attr('y', 440)
+		//.attr('x', 325)
+		.attr('class', 'axisText')
+		.text('Obesity (%)');
 
 });
