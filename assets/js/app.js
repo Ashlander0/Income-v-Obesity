@@ -6,7 +6,7 @@ var svgHeight = 500;
 var margins = {
 	top: 50,
 	right: 50,
-	left: 50,
+	left: 75,
 	bottom: 50
 };
 
@@ -51,7 +51,8 @@ d3.csv('assets/data/data.csv').then(function(data) {
 		.attr('cx', d => xaxis(d.obesity))
 		.attr('cy', d => yaxis(d.income))
 		.attr('r', 10)
-		.attr('fill', 'grey');
+		.attr('fill', 'grey')
+		.attr('opacity', .5);
 
 	chart.select('g')
         .selectAll('circle')
@@ -69,7 +70,7 @@ d3.csv('assets/data/data.csv').then(function(data) {
 	// axis labels
 	chart.append('text')
 		.attr('transform', 'rotate(-90)')
-		.attr('y', 0)
+		.attr('y', -70)
 		.attr('x', -250)
 		.attr('dy', '1em')
 		.attr('class', 'axisText')
