@@ -15,10 +15,27 @@ var width = svgWidth - margins.left - margins.right;
 var height = svgHeight - margins.top - margins.bottom;
 
 // import data
-d3.csv('/../data/data.csv').then(function(data) {
+d3.csv('assets/data/data.csv').then(function(data) {
 	// create chart
 	var svg = d3.select('#scatter').append('svg').attr('width', svgWidth).attr('height', svgHeight);
 	var chart = svg.append('g').attr('transform', `translate(${margins.left}, ${margins.top})`);
 
+	var xaxis = d3.scaleLinear()
+		.domain([0, d3.max(data, d => d.poverty)])
+		.range([0, width]);
+	var yaxis = d3.scaleLinear()
+		.domain([0, d3.max(data, d => d.healthcare)])
+		.range([height, 0]);
 	
+	var bottomAxis = d3.axisBottom(xaxis);
+	var leftAxis = d3.axisLeft(yaxis);
+
+	chart.append("g")
+	.attr("transform", `translate(0, ${height})`)
+	.call(bottomAxis);
+
+  	chart.append("g")
+	.call(leftAxis);
+
+
 });
